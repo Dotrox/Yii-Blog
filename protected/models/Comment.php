@@ -31,6 +31,21 @@ class Comment extends CActiveRecord
 		return parent::model($className);
 	}
 
+    public function getUrl($post=null)
+    {
+        if($post===null)
+            $post=$this->post;
+        return $post->url.'#c'.$this->id;
+    }
+
+    public function getAuthorLink()
+    {
+        if(!empty($this->url))
+            return CHtml::link(CHtml::encode($this->author),$this->url);
+        else
+            return CHtml::encode($this->author);
+    }
+
 	/**
 	 * @return string the associated database table name
 	 */
@@ -48,11 +63,13 @@ class Comment extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('content, status, author, email, post_id', 'required'),
-			array('status, create_time, post_id', 'numerical', 'integerOnly'=>true),
+			/*array('status, create_time, post_id', 'numerical', 'integerOnly'=>true),*/
 			array('author, email, url', 'length', 'max'=>128),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, content, status, create_time, author, email, url, post_id', 'safe', 'on'=>'search'),
+            array('email','email'),
+            array('url','url'),
 		);
 	}
 
@@ -76,9 +93,9 @@ class Comment extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'content' => 'Content',
-			'status' => 'Status',
+			'status' => 'Статус',
 			'create_time' => 'Create Time',
-			'author' => 'Author',
+			'author' => 'Автор',
 			'email' => 'Email',
 			'url' => 'Url',
 			'post_id' => 'Post',
@@ -109,4 +126,36 @@ class Comment extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+    protected function beforeSave()
+    {
+        if(parent::beforeSave())
+        {
+            if($this->isNewRecord)
+                $this->create_time=time();
+            return true;
+        }
+        else
+            return false;
+    }
+
+    public function approve()
+    {
+        $this->status=Comment::STATUS_APPROVED;
+        $this->update(array('status'));
+    }
+
+    public function getPendingCommentCount()
+    {
+        return $this->count('status='.self::STATUS_PENDING);
+    }
+
+    public function findRecentComments($limit=10)
+    {
+        return $this->with('post')->findAll(array(
+            'condition'=>'t.status='.self::STATUS_APPROVED,
+            'order'=>'t.create_time DESC',
+            'limit'=>$limit,
+        ));
+    }
 }
