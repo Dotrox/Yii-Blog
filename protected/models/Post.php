@@ -11,6 +11,7 @@
  * @property integer $status
  * @property integer $create_time
  * @property integer $update_time
+ * @property integer $counter
  * @property integer $author_id
  *
  * The followings are the available model relations:
@@ -99,6 +100,7 @@ class Post extends CActiveRecord
 			'status' => 'Статус',
 			'create_time' => 'Create Time',
 			'update_time' => 'Update Time',
+            'counter' => 'Количество редактирований',
 			'author_id' => 'Автор',
 		);
 	}
@@ -179,5 +181,16 @@ class Post extends CActiveRecord
             $comment->status=Comment::STATUS_APPROVED;
         $comment->post_id=$this->id;
         return $comment->save();
+    }
+
+    public function behaviors()
+    {
+        return array(
+            'countPostChanges'=>array(
+                'class'=>'application.components.behaviors.ChangeCounterBehavior',
+                'updateAttribute'=>'counter',
+                'counterDelta'=>1,
+            ),
+        );
     }
 }

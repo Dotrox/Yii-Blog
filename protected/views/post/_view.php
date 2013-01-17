@@ -33,6 +33,10 @@
 	<?php echo CHtml::encode($data->update_time); ?>
 	<br />
 
+    <b><?php echo CHtml::encode($data->getAttributeLabel('counter')); ?>:</b>
+	<?php echo CHtml::encode($data->counter); ?>
+	<br />
+
 	<?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('author_id')); ?>:</b>
 	<?php echo CHtml::encode($data->author_id); ?>

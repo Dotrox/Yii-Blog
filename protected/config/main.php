@@ -5,6 +5,7 @@
 
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
+error_reporting(-1);
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'Yii blog',
@@ -42,10 +43,11 @@ return array(
 		'urlManager'=>array(
 			'urlFormat'=>'path',
 			'rules'=>array(
-				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
+                '<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 			),
+            'showScriptName'=>true,
 		),
 
 		/*'db'=>array(
@@ -87,6 +89,6 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 		// this is used in contact page
-		'adminEmail'=>'webmaster@example.com',
+		'adminEmail'=>'dotrox@gmail.com',
 	),
 );

@@ -65,7 +65,7 @@ class CommentController extends Controller
 		$model=new Comment;
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 
 		if(isset($_POST['Comment']))
 		{
@@ -89,7 +89,7 @@ class CommentController extends Controller
 		$model=$this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 
 		if(isset($_POST['Comment']))
 		{
@@ -148,11 +148,11 @@ class CommentController extends Controller
 		));
 	}
 
-        public function actionApprove()
+        public function actionApprove($id)
     {
         if(Yii::app()->request->isPostRequest)
         {
-            $comment=$this->loadModel();
+            $comment=$this->loadModel($id);
             $comment->approve();
             $this->redirect(array('index'));
         }

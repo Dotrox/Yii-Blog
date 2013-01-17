@@ -22,12 +22,23 @@
 		$this->endWidget();*/
 
         $this->widget('TagCloud', array(
-            'maxTags'=>Yii::app()->params['tagCloudCount'],
+            //'maxTags'=>Yii::app()->params['tagCloudCount'],
         ));
 
         $this->widget('RecentComments', array(
             'maxComments'=>Yii::app()->params['recentCommentCount'],
             'title'=>RecentComments::modTitle(),
+        ));
+
+        $dataProvider = new CActiveDataProvider(
+            Comment::model()->sortByComments('2')
+        );
+
+        $this->widget('zii.widgets.grid.CGridView', array(
+            'dataProvider' => $dataProvider,
+            'columns' => array(
+                'author'
+            )
         ));
 	?>
 	</div><!-- sidebar -->

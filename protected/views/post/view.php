@@ -28,6 +28,7 @@ $this->menu=array(
 		'status',
 		'create_time',
 		'update_time',
+        'counter',
 		'author_id',
 	),
 )); ?>

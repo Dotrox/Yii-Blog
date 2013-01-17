@@ -158,4 +158,14 @@ class Comment extends CActiveRecord
             'limit'=>$limit,
         ));
     }
+
+    public function scopes()
+    {
+        return array(
+            'sortByComments' => array(
+                'condition' => "status =".self::STATUS_APPROVED,
+                'order' => 'author ASC',
+            ),
+        );
+    }
 }

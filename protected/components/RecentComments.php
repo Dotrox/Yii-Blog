@@ -6,7 +6,7 @@
         public $title;
         public $maxComments=10;
 
-        public function modTitle(){
+        public static function modTitle(){
             $title = "Последние комментарии";
             return $title;
         }
@@ -24,6 +24,6 @@
 
     interface ICommentTitle
     {
-        public function modTitle();
+        public static function modTitle();
 
     }

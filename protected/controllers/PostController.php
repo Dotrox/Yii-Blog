@@ -63,7 +63,7 @@ class PostController extends Controller
 		$model=new Post;
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 
 		if(isset($_POST['Post']))
 		{
@@ -87,7 +87,7 @@ class PostController extends Controller
 		$model=$this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 
 		if(isset($_POST['Post']))
 		{
@@ -96,11 +96,10 @@ class PostController extends Controller
 				$this->redirect(array('view','id'=>$model->id));
 		}
 
-		$this->render('update',array(
+        $this->render('update',array(
 			'model'=>$model,
 		));
 	}
-
 
 	public function actionDelete($id)
 	{
@@ -164,6 +163,7 @@ class PostController extends Controller
             Yii::app()->end();
         }
         /******/
+
         if(isset($_POST['Comment']))
         {
             $comment->attributes=$_POST['Comment'];
@@ -211,4 +211,9 @@ class PostController extends Controller
 			Yii::app()->end();
 		}
 	}
+    /*public function findSomething()
+    {
+        $comments = Comment::model()->scopes(array('scopeAtr'=>array('tags'=>'test')))->findByAttributes();
+
+    }*/
 }
