@@ -11,6 +11,32 @@
 	'enableAjaxValidation'=>true,
 )); ?>
 
+<?php
+    Yii::import('ext.imperavi-redactor-widget.ImperaviRedactorWidget');
+    $this->widget('ImperaviRedactorWidget', array(
+    // the textarea selector
+    'selector' => '#Comment_content',
+    // some options, see http://imperavi.com/redactor/docs/
+        'options' => array(
+            'lang' => 'ru',
+        ),
+        'plugins' => array(
+            'fullscreen' => array(
+                'js' => array('fullscreen.js',),
+            ),
+            'clips' => array(
+                // You can set base path to assets
+                'basePath' => 'application.extensions.imperavi-redactor-widget.assets.plugins.clips',
+                // or url, basePath will be ignored
+                //'baseUrl' => '/js/my_plugin',
+                'css' => array('clips.css',),
+                'js' => array('clips.js',),
+                // add depends packages
+                'depends' => array('imperavi-redactor',),
+            ),
+        ),
+)); ?>
+
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
 	<?php echo $form->errorSummary($model); ?>

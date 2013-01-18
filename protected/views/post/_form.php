@@ -11,7 +11,16 @@
 	'enableAjaxValidation'=>true,
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
+<?php
+    Yii::import('ext.imperavi-redactor-widget.ImperaviRedactorWidget');
+    $this->widget('ImperaviRedactorWidget', array(
+    // the textarea selector
+    'selector' => '#Post_content',
+    // some options, see http://imperavi.com/redactor/docs/
+    'options' => array(),
+)); ?>
+
+    <p class="note">Fields with <span class="required">*</span> are required.</p>
 
 	<?php echo $form->errorSummary($model); ?>
 
